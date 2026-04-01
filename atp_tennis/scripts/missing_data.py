@@ -101,7 +101,7 @@ def generate_mcar(
     X: pd.DataFrame,
     y: np.ndarray,
     missing_rate: float = 0.3,
-    random_state: int = 42,
+    random_state: int = 121553223,
 ) -> Tuple[pd.DataFrame, np.ndarray, np.ndarray]:
     """MCAR: every observation has the same constant probability of its
     label being missing.
@@ -137,7 +137,7 @@ def generate_mar1(
     y: np.ndarray,
     missing_rate: float = 0.3,
     feature_col: Optional[str] = None,
-    random_state: int = 42,
+    random_state: int = 121553223,
 ) -> Tuple[pd.DataFrame, np.ndarray, np.ndarray]:
     """MAR1: the missingness probability depends on a *single* feature.
 
@@ -192,7 +192,7 @@ def generate_mar2(
     X: pd.DataFrame,
     y: np.ndarray,
     missing_rate: float = 0.3,
-    random_state: int = 42,
+    random_state: int = 121553223,
 ) -> Tuple[pd.DataFrame, np.ndarray, np.ndarray]:
     """MAR2: the missingness probability depends on *all* features.
 
@@ -236,7 +236,7 @@ def generate_mnar(
     y: np.ndarray,
     missing_rate: float = 0.3,
     y_weight: float = 2.0,
-    random_state: int = 42,
+    random_state: int = 121553223,
 ) -> Tuple[pd.DataFrame, np.ndarray, np.ndarray]:
     """MNAR: the missingness probability depends on Y (and on X).
 
@@ -295,7 +295,7 @@ def generate_missing(
     X: pd.DataFrame,
     y: np.ndarray,
     missing_rate: float = 0.3,
-    random_state: int = 42,
+    random_state: int = 121553223,
     **kwargs,
 ) -> Tuple[pd.DataFrame, np.ndarray, np.ndarray]:
     """Dispatch to the requested missingness scheme.

@@ -228,7 +228,7 @@ End-to-end preprocessing in a single call. Executes the following steps in order
 Every generator function has this form:
 
 ```
-generate_<scheme>(X, y, missing_rate=0.3, random_state=42, **kwargs) → (X, y_obs, probs)
+generate_<scheme>(X, y, missing_rate=0.3, random_state=121553223, **kwargs) → (X, y_obs, probs)
 ```
 
 | Return Value | Type | Description |
@@ -254,7 +254,7 @@ Every observation has the **same constant** probability of having its label hidd
 | Parameter | Default | Description |
 |---|---|---|
 | `missing_rate` | `0.3` | Constant probability c |
-| `random_state` | `42` | Seed for the NumPy Generator |
+| `random_state` | `121553223` | Seed for the NumPy Generator |
 
 **Implementation:** Creates a constant probability vector `probs = [c, c, ..., c]` and draws Bernoulli samples.
 
@@ -274,7 +274,7 @@ Missingness depends on exactly **one** explanatory variable X_j.
 |---|---|---|
 | `missing_rate` | `0.3` | Target overall missing rate |
 | `feature_col` | `None` | Which feature drives missingness. If `None`, automatically selects the feature with the **highest absolute correlation with Y**. |
-| `random_state` | `42` | Seed |
+| `random_state` | `121553223` | Seed |
 
 **Implementation details:**
 1. The driving feature X_j is standardized (zero mean, unit variance) for numerical stability.
@@ -299,7 +299,7 @@ Missingness depends on **all** features simultaneously through a linear combinat
 | Parameter | Default | Description |
 |---|---|---|
 | `missing_rate` | `0.3` | Target overall missing rate |
-| `random_state` | `42` | Seed (also used to draw the weight vector) |
+| `random_state` | `121553223` | Seed (also used to draw the weight vector) |
 
 **Implementation details:**
 1. All features are standardized independently.
@@ -325,7 +325,7 @@ Missingness depends on both the features **and the true label Y itself**. This i
 |---|---|---|
 | `missing_rate` | `0.3` | Target overall missing rate |
 | `y_weight` | `2.0` | Coefficient γ for Y in the linear predictor. Positive γ means **positive-class labels (Y=1) are more likely to be hidden**. |
-| `random_state` | `42` | Seed |
+| `random_state` | `121553223` | Seed |
 
 **Implementation details:**
 1. Features are standardized, and a unit-norm weight vector w is drawn (same as MAR2).
@@ -429,7 +429,7 @@ After symmetrization, features like `rank_diff = A_rank − B_rank` are roughly 
 
 #### Seed Separation
 
-A critical implementation detail: the symmetrization coin flip uses `random_state=0`, while the missing-data generators use `random_state=42`. **Using the same seed for both would create correlated random sequences**, causing pathological behavior — e.g., MCAR producing 0% missingness in class 0 and 60% in class 1, violating the MCAR definition entirely. The seed separation was validated empirically.
+A critical implementation detail: the symmetrization coin flip uses `random_state=0`, while the missing-data generators use `random_state=121553223`. **Using the same seed for both would create correlated random sequences**, causing pathological behavior — e.g., MCAR producing 0% missingness in class 0 and 60% in class 1, violating the MCAR definition entirely. The seed separation was validated empirically.
 
 ### 5.4 Feature Engineering
 
@@ -544,7 +544,7 @@ Starting with 24,616 rows and 23 features, the pipeline produced:
 
 ### 5.6 Missing-Label Generation Results
 
-All schemes configured with `missing_rate=0.3`, `random_state=42`.
+All schemes configured with `missing_rate=0.3`, `random_state=121553223`.
 
 | Scheme | Overall Missing Rate | Missing Rate (Y=0) | Missing Rate (Y=1) | Ratio (Y=1 / Y=0) | Labels Hidden |
 |---|---|---|---|---|---|
@@ -666,7 +666,7 @@ Without normalization, the linear predictor `X·w` would have variance proportio
 
 ### Why separate seeds for symmetrization and missingness?
 
-NumPy's `default_rng` produces a deterministic sequence for a given seed. If both the symmetrization coin flip and the MCAR Bernoulli mask use seed 42, they produce **identical** sequences of random numbers. Since the coin flip determines Y, this creates a perfect correlation between Y and S — turning MCAR into a pathological MNAR where one class has 0% missingness and the other has ~60%. Using distinct seeds (0 and 42) eliminates this artifact entirely.
+NumPy's `default_rng` produces a deterministic sequence for a given seed. If both the symmetrization coin flip and the MCAR Bernoulli mask use seed 42, they produce **identical** sequences of random numbers. Since the coin flip determines Y, this creates a perfect correlation between Y and S — turning MCAR into a pathological MNAR where one class has 0% missingness and the other has ~60%. Using distinct seeds (0 and 121553223) eliminates this artifact entirely.
 
 ### Why is accuracy 94% and not lower?
 
