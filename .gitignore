@@ -2,10 +2,10 @@ datasets/
 processed/
 !**/.gitkeep
 .devcontainer/
-!poker_missing_label_learning/one_dollar_spin_and_go.csv
 poker_missing_label_learning/*.csv
+!poker_missing_label_learning/one_dollar_spin_and_go.csv
+heart_disease/data/*
 !heart_disease/data/heart.csv
-heart_disease/data/*.csv
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,jupyternotebooks
